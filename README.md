@@ -26,8 +26,7 @@ It’s simple to set up, modular, and expandable for future IoT enhancements.
 8. [🧠 How to Run Without Hardware (Demo Mode)](#-how-to-run-without-hardware-demo-mode)  
 9. [❓ Troubleshooting](#-troubleshooting)  
 10. [👥 Contributing](#-contributing)  
-11. [📄 License](#-license)  
-12. [👤 Author](#-author)
+
 
 ---
 
