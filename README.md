@@ -1,80 +1,88 @@
-# 🏠 Smart IoT Home Automation with Blynk & NodeMCU ESP8266
+# 🔌 Smart IoT Home Automation (ESP32 + Blynk)
 
-**Platform:** Arduino & Blynk Cloud  
-
-![Made with Arduino](https://img.shields.io/badge/Made%20with-Arduino-blue?logo=arduino)
-![Uses Blynk](https://img.shields.io/badge/IoT-Blynk-green?logo=blynk)
-
-
----
-
-## ⚡ Overview
-Build your own **smart home automation system** using a **NodeMCU ESP8266** and the **Blynk IoT platform**.  
-This project allows you to control lights, fans, or any appliances via smartphone — from anywhere.  
-It’s simple to set up, modular, and expandable for future IoT enhancements.
-
----
-
-## 📚 Table of Contents
-1. [✨ Features](#-features)  
-2. [🧰 Required Components](#-required-components)  
-3. [🔌 Circuit Diagram & Connections](#-circuit-diagram--connections)  
-4. [☁️ Setting Up Blynk Cloud](#️-setting-up-blynk-cloud)  
-5. [🧪 Installing Arduino IDE & Uploading Code](#-installing-arduino-ide--uploading-code)  
-6. [📲 Connecting Device to Blynk App](#-connecting-device-to-blynk-app)  
-7. [🧩 Optional Features](#-optional-features)  
-8. [🧠 How to Run Without Hardware (Demo Mode)](#-how-to-run-without-hardware-demo-mode)  
-9. [❓ Troubleshooting](#-troubleshooting)  
-10. [👥 Contributing](#-contributing)  
-
+> Control your home appliances from anywhere using **ESP32** and the **Blynk IoT Cloud**.  
+> Improved version of the original ESP8266-based project — faster, modular, and ready for real or simulated hardware.
 
 ---
 
 ## ✨ Features
-✅ Control up to **4 devices** via smartphone  
-✅ **Remembers relay states** after reboot (cloud sync)  
-✅ **OTA-ready** modular firmware structure  
-✅ **Wi-Fi provisioning** for easy setup  
-✅ **Simple wiring and beginner-friendly**  
-✅ Works with **Blynk Cloud** (free tier)
+✅ Works with **ESP32 Dev Module**  
+✅ Control up to **4 appliances** via smartphone  
+✅ Uses **Blynk Cloud** for IoT connectivity  
+✅ Built-in **Wi-Fi status LED**  
+✅ Optional **Demo Mode** (no hardware needed)  
+✅ Optional **Scheduler**, **Logger**, and **Web UI** modules  
+✅ Fully open-source & modular for learning and projects
 
 ---
 
 ## 🧰 Required Components
 
-| Component | Qty | Description |
-|------------|-----|-------------|
-| NodeMCU ESP8266 | 1 | Wi-Fi-enabled microcontroller |
-| 4-Channel Relay Module | 1 | Controls appliances |
-| Jumper Wires | As needed | For module connections |
-| Power Supply (5 V 2 A) | 1 | Powers NodeMCU & relay board |
+| Component | Quantity | Description |
+|------------|-----------|-------------|
+| ESP32 Dev Module | 1 | Wi-Fi + Bluetooth MCU |
+| 4-Channel Relay | 1 | Controls appliances |
+| Jumper Wires | As needed | For connections |
+| Power Supply (5V, 2A) | 1 | Stable power |
 | AC Appliances | 1–4 | Fan, Light, etc. |
-
-💡 *Optional:* Add an LED on **D0** to indicate Wi-Fi status.
+| LED (optional) | 1 | Wi-Fi status indicator |
 
 ---
 
-## 🔌 Circuit Diagram & Connections
+## ⚙️ Circuit Diagram & Connections
 
-| Relay Pin | Connect to NodeMCU |
-|------------|-------------------|
-| VCC | VIN (5 V) |
-| GND | G |
-| IN1 | D1 |
-| IN2 | D2 |
-| IN3 | D3 |
-| IN4 | D4 |
+| ESP32 Pin | Relay Input | Description |
+|------------|--------------|-------------|
+| GPIO 5 | IN1 | Relay 1 |
+| GPIO 18 | IN2 | Relay 2 |
+| GPIO 19 | IN3 | Relay 3 |
+| GPIO 21 | IN4 | Relay 4 |
+| GPIO 2 | LED | Wi-Fi indicator |
+| 5V | VCC | Power to relay |
+| GND | GND | Common ground |
+
+💡 Tip: You can add more relays by defining new GPIO pins in `BlynkEdgent_ESP32.ino`.
 
 ---
 
 ## ☁️ Setting Up Blynk Cloud
-1. Go to [https://blynk.cloud](https://blynk.cloud)  
-2. Log in or sign up → Create a new **template**  
-3. Configure virtual pins:  
-   - **V0** → State Memory  
-   - **V1–V4** → Device controls  
-4. Copy these details into your Arduino sketch:
-   ```cpp
-   #define BLYNK_TEMPLATE_ID "Your_Template_ID"
-   #define BLYNK_TEMPLATE_NAME "Your_Template_Name"
-   #define BLYNK_FIRMWARE_VERSION "1.0.0"
+
+1. Go to [Blynk.Cloud](https://blynk.cloud)
+2. Create a **new Template** for ESP32:
+   - **Virtual Pins:** V1–V4 → Control relays  
+   - (Optional) V0 → Memory Sync
+3. Copy your:
+   - `BLYNK_TEMPLATE_ID`
+   - `BLYNK_TEMPLATE_NAME`
+   - Auth Token
+4. Paste them inside your `.ino` file.
+
+---
+
+## 🧪 Installing Arduino IDE & Uploading Code
+
+1. **Install Arduino IDE**
+2. Go to: `File → Preferences → Additional Boards Manager URLs`
+   https://espressif.github.io/arduino-esp32/package_esp32_index.json
+3. Open **Boards Manager** → search `esp32` → Install  
+4. Install the **Blynk** library from Library Manager  
+5. Open `BlynkEdgent_ESP32.ino`
+6. Replace Wi-Fi credentials and Blynk details:
+```cpp
+char ssid[] = "Your_WiFi_Name";
+char pass[] = "Your_WiFi_Password";
+char auth[] = "Your_Blynk_Auth_Token";
+
+Click Upload
+
+📱 Connecting Device to Blynk App
+
+Open Blynk IoT App (Android/iOS)
+
+Log in → Add Device → “Discover Nearby”
+
+Connect to your ESP32 Wi-Fi hotspot
+
+Add 4 Switches → assign to V1–V4
+
+Toggle to control your relays in real time 🚀
